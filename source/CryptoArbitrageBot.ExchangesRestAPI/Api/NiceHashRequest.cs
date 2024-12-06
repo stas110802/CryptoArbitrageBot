@@ -44,7 +44,7 @@ public class NiceHashRequest : BaseRequest
     private string GetServerTimestamp()
     {
         var publicApi = new CustomRestApi<NiceHashRequest>(new NiceHashOptions());
-        // todo can create static factory for public api's
+        // can create static factory for public api's
         
         var timeResponse = publicApi.CreateRequest(Method.Get, NiceHashEndpoint.ServerTime).Execute();
 
