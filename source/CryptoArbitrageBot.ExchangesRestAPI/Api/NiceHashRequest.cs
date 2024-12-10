@@ -8,9 +8,8 @@ using RestSharp;
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
-public class NiceHashRequest : BaseRequest
+public sealed class NiceHashRequest : BaseRequest
 {
-    
     public override BaseRequest Authorize(bool isAdditionalLogic = false)
     {
         var orgId = ChildOptions.OrganizationId;
@@ -35,7 +34,11 @@ public class NiceHashRequest : BaseRequest
 
     public override BaseRequest WithPayload(string payload)
     {
-        throw new NotImplementedException();
+        Request.AddHeader("Accept", "application/json");
+        Request.AddHeader("Content-type", "application/json");
+        Request.AddJsonBody(payload);
+
+        return this;
     }
     
     private NiceHashOptions ChildOptions 
@@ -43,15 +46,13 @@ public class NiceHashRequest : BaseRequest
     
     private string GetServerTimestamp()
     {
-        var publicApi = new CustomRestApi<NiceHashRequest>(new NiceHashOptions());
+        var publicApi = new BaseRestApi<NiceHashRequest>(new NiceHashOptions());
         // can create static factory for public api's1
         
         var timeResponse = publicApi.CreateRequest(Method.Get, NiceHashEndpoint.ServerTime).Execute();
 
         if (string.IsNullOrEmpty(timeResponse))
-        {
             throw new Exception("[API ERROR] : The server is not responding");
-        }
 
         var serverTimeObject = JsonConvert.DeserializeObject<JToken>(timeResponse);
         var time = serverTimeObject?["serverTime"]?.ToString();
@@ -62,7 +63,8 @@ public class NiceHashRequest : BaseRequest
         return time;
     }
 
-    private string HashBySegments(string time, string nonce, string orgId, string method, string encodedPath, string? query, string? bodyStr)
+    private string HashBySegments(string time, string nonce, string orgId, string method,
+        string encodedPath, string? query, string? bodyStr)
     {
         var segments = new List<string?>
         {
@@ -78,9 +80,7 @@ public class NiceHashRequest : BaseRequest
         };
 
         if (string.IsNullOrEmpty(bodyStr) == false)
-        {
             segments.Add(bodyStr);
-        }
 
         return HashCalculator.CalculateHMACSHA256Hash(
             JoinSegments(segments), ChildOptions.SecretKey);

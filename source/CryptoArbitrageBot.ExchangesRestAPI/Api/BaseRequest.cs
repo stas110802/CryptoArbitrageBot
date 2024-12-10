@@ -7,11 +7,11 @@ namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
 public abstract class BaseRequest
 {
-    public  RestRequest Request { get; set; }
+    public RestRequest Request { get; set; }
     public RestClient Client { get; set; }
     public IApiOptions Options { get; set; }
-    public  BaseEndpoint Endpoint { get; set; }
-    public  string FullPath { get; set; } 
+    public BaseEndpoint Endpoint { get; set; }
+    public string FullPath { get; set; } 
     public string? Payload { get; set; }
     
     public abstract BaseRequest Authorize(bool isAdditionalLogic = false);

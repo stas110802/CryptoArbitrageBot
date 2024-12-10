@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrageBot.ExchangesRestAPI", "source\CryptoArbitrageBot.ExchangesRestAPI\CryptoArbitrageBot.ExchangesRestAPI.csproj", "{67042008-6FEF-465F-B7DE-509FB0990DF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrageBot.CI", "source\CryptoArbitrageBot.CI\CryptoArbitrageBot.CI.csproj", "{4CC054AF-5FBA-4F9D-9EA5-B9788ABAAE37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D800AF89-8915-43A2-BDB7-566821213678}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrage.ExchangeRestAPI.UnitTest", "tests\CryptoArbitrage.ExchangeRestAPI.UnitTest\CryptoArbitrage.ExchangeRestAPI.UnitTest.csproj", "{89FF53D4-5F68-4D20-9829-2ED966BA2359}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrageBot.ExchangeClients", "source\CryptoArbitrageBot.ExchangeClients\CryptoArbitrageBot.ExchangeClients.csproj", "{6658034A-EB55-44BA-8FEE-25C76C4E148B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,20 @@ Global
 		{67042008-6FEF-465F-B7DE-509FB0990DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67042008-6FEF-465F-B7DE-509FB0990DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67042008-6FEF-465F-B7DE-509FB0990DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC054AF-5FBA-4F9D-9EA5-B9788ABAAE37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC054AF-5FBA-4F9D-9EA5-B9788ABAAE37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC054AF-5FBA-4F9D-9EA5-B9788ABAAE37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC054AF-5FBA-4F9D-9EA5-B9788ABAAE37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89FF53D4-5F68-4D20-9829-2ED966BA2359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89FF53D4-5F68-4D20-9829-2ED966BA2359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89FF53D4-5F68-4D20-9829-2ED966BA2359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89FF53D4-5F68-4D20-9829-2ED966BA2359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{89FF53D4-5F68-4D20-9829-2ED966BA2359} = {D800AF89-8915-43A2-BDB7-566821213678}
 	EndGlobalSection
 EndGlobal

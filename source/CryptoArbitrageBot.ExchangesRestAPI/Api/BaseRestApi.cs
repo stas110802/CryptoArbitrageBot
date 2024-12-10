@@ -4,12 +4,12 @@ using RestSharp;
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
-public class CustomRestApi<TRequest> : IExchangeRestApi
+public sealed class BaseRestApi<TRequest> : IExchangeRestApi
     where TRequest : BaseRequest, new()
 {
     private readonly IApiOptions _options;
 
-    public CustomRestApi(IApiOptions options)
+    public BaseRestApi(IApiOptions options)
     {
         _options = options;
     }
