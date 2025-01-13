@@ -4,11 +4,13 @@ using CryptoArbitrageBot.ExchangesRestAPI.Endpoints;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using static NUnit.Framework.Assert;
 
 namespace CryptoArbitrage.ExchangeRestAPI.UnitTest;
 
 public class BinancePublicApiTest
 {
+    private BaseRestApi<BinanceRequest> _publicRestApi = new(new BinanceOptions());
     [SetUp]
     public void Setup()
     {
@@ -17,19 +19,12 @@ public class BinancePublicApiTest
     [Test]
     public void TestPublicApi()
     {
-        var options = new BinanceOptions
-        {
-            PublicKey = "",
-            SecretKey = ""
-        };
-        var server = new BaseRestApi<BinanceRequest>(options);
         var query = $"?symbol=BTCUSDT";
-        var response = server
+        var response = _publicRestApi
             .CreateRequest(Method.Get, BinanceEndpoint.CurrentPrice, query)
             .Execute();
         var token = JObject.Parse(response).SelectToken("price");
         var result = decimal.TryParse(token.ToString(), CultureInfo.InvariantCulture, out var price);
-        
-        Assert.IsTrue(result);
+        That(result, Is.True);
     }
 }

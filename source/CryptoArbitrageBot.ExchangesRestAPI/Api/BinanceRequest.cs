@@ -1,27 +1,27 @@
-﻿using CryptoArbitrageBot.ExchangesRestAPI.Utilities;
+﻿using CryptoArbitrageBot.ExchangesRestAPI.Options;
+using CryptoArbitrageBot.ExchangesRestAPI.Utilities;
 using RestSharp;
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
-public class BinanceRequest : BaseRequest
+public sealed class BinanceRequest : BaseRequest
 {
-    public override BaseRequest Authorize(bool isAdditionalLogic = false)
+    public override BaseRequest Authorize()
     {
-        var query = GetQuery(FullPath);
+        if (RequestOptions == null || ApiOptions == null)
+            throw new NullReferenceException("");
+        
+        var query = GetQuery(RequestOptions.FullPath);
         if (string.IsNullOrEmpty(query))
             throw new NullReferenceException("[Binance Request Error]\nRequired query parameters cant be nullable");
         
-        var signature = HashCalculator.CalculateHMACSHA256Hash(query, Options.SecretKey);
-        FullPath += $"&signature={signature}";
-        Request = new RestRequest(FullPath);
-        Request.AddHeader("X-MBX-APIKEY", Options.PublicKey);
+        var signature = HashCalculator.CalculateHMACSHA256Hash(query, ApiOptions.SecretKey);
+        RequestOptions.FullPath += $"&signature={signature}";
+        var method = RequestOptions.Request.Method;
+        RequestOptions.Request = new RestRequest(RequestOptions.FullPath, method);
+        RequestOptions.Request.AddHeader("X-MBX-APIKEY", ApiOptions.PublicKey);
         
         return this;
-    }
-
-    public override BaseRequest WithPayload(string payload)
-    {
-        throw new NotImplementedException();
     }
     
     private static string? GetQuery(string url)

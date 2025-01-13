@@ -58,7 +58,7 @@ public interface IExchangeClient
     /// Withdrawal currency
     /// </summary>
     /// <returns></returns>
-    public bool WithdrawalCurrency(string currency, decimal amount, string address);
+    public bool WithdrawalCurrency(string coin, decimal amount, string address);
 
-    public void GetMyOrders();
+    public IEnumerable<Order> GetMyOrders();
 }

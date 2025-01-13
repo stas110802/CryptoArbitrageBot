@@ -1,28 +1,27 @@
 ﻿using CryptoArbitrageBot.ExchangesRestAPI.Endpoints;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
-using static System.String;
 using RestSharp;
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
 public abstract class BaseRequest
 {
-    public RestRequest Request { get; set; }
-    public RestClient Client { get; set; }
-    public IApiOptions Options { get; set; }
-    public BaseEndpoint Endpoint { get; set; }
-    public string FullPath { get; set; } 
-    public string? Payload { get; set; }
+    public RestClient? Client;
+    public RequestOptions? RequestOptions { get; set; }
+    public IApiOptions? ApiOptions { get; set; }
+    public abstract BaseRequest Authorize();
     
-    public abstract BaseRequest Authorize(bool isAdditionalLogic = false);
-
-    public abstract BaseRequest WithPayload(string payload);
-
-    public virtual string Execute()
+    public string Execute()
     {
-        var result = Client.Execute(Request, Request.Method).Content;
-        if (IsNullOrEmpty(result))
-            throw new Exception("[REST-API] Request fetch error.");
+        if (RequestOptions == null || Client == null)
+            throw new NullReferenceException("[Request error] : First you need to execute 'Create' method.");
+        
+        var result = Client
+            .Execute(RequestOptions.Request, RequestOptions.Request.Method)
+            .Content;
+        
+        if (string.IsNullOrEmpty(result))
+            throw new Exception("[Request error] Request fetch error.");
         
         return result;
     }
