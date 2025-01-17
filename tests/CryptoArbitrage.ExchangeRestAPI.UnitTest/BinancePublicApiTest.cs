@@ -10,10 +10,14 @@ namespace CryptoArbitrage.ExchangeRestAPI.UnitTest;
 
 public class BinancePublicApiTest
 {
-    private BaseRestApi<BinanceRequest> _publicRestApi = new(new BinanceOptions());
+    private BaseRestApi<BinanceRequest> _publicRestApi; 
     [SetUp]
     public void Setup()
     {
+        _publicRestApi = new BaseRestApi<BinanceRequest>(new ExchangeApiOptions
+        {
+            BaseUri = "https://api.binance.com",
+        });
     }
 
     [Test]

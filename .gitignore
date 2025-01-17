@@ -4,3 +4,5 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 /logs/
+/tests/test-ex-config.json
+cfg.json

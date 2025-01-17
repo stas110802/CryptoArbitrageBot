@@ -1,5 +1,4 @@
-﻿using CryptoArbitrageBot.ExchangesRestAPI.Options;
-using CryptoArbitrageBot.ExchangesRestAPI.Utilities;
+﻿using CryptoArbitrageBot.ExchangesRestAPI.Utilities;
 using RestSharp;
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Api;

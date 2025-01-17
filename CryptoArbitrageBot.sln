@@ -10,6 +10,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrage.ExchangeRes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrageBot.ExchangeClients", "source\CryptoArbitrageBot.ExchangeClients\CryptoArbitrageBot.ExchangeClients.csproj", "{6658034A-EB55-44BA-8FEE-25C76C4E148B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrage.ExchangeClients.UnitTest", "tests\CryptoArbitrage.ExchangeClients.UnitTest\CryptoArbitrage.ExchangeClients.UnitTest.csproj", "{6F4D699B-13EA-442A-A279-0B797A1D600F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrageBot.Bot", "source\CryptoArbitrageBot.Bot\CryptoArbitrageBot.Bot.csproj", "{DFC24C15-676C-4A9C-993A-9513327AA268}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoArbitrageBot.Bot.UnitTest", "tests\CryptoArbitrageBot.Bot.UnitTest\CryptoArbitrageBot.Bot.UnitTest.csproj", "{84E4945D-98C7-4436-985B-D44AE300E382}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +38,22 @@ Global
 		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6658034A-EB55-44BA-8FEE-25C76C4E148B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4D699B-13EA-442A-A279-0B797A1D600F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4D699B-13EA-442A-A279-0B797A1D600F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4D699B-13EA-442A-A279-0B797A1D600F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4D699B-13EA-442A-A279-0B797A1D600F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFC24C15-676C-4A9C-993A-9513327AA268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFC24C15-676C-4A9C-993A-9513327AA268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFC24C15-676C-4A9C-993A-9513327AA268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFC24C15-676C-4A9C-993A-9513327AA268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E4945D-98C7-4436-985B-D44AE300E382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E4945D-98C7-4436-985B-D44AE300E382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E4945D-98C7-4436-985B-D44AE300E382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E4945D-98C7-4436-985B-D44AE300E382}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{89FF53D4-5F68-4D20-9829-2ED966BA2359} = {D800AF89-8915-43A2-BDB7-566821213678}
+		{6F4D699B-13EA-442A-A279-0B797A1D600F} = {D800AF89-8915-43A2-BDB7-566821213678}
+		{84E4945D-98C7-4436-985B-D44AE300E382} = {D800AF89-8915-43A2-BDB7-566821213678}
 	EndGlobalSection
 EndGlobal

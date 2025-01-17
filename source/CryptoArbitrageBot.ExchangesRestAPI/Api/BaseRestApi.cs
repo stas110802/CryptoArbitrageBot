@@ -1,16 +1,16 @@
 ﻿using CryptoArbitrageBot.ExchangesRestAPI.Endpoints;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
 using RestSharp;
-using static System.String;
+
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
 public sealed class BaseRestApi<T> 
     where T : BaseRequest, new()
 {
-    private readonly IApiOptions _apiOptions;
+    private readonly ExchangeApiOptions _apiOptions;
 
-    public BaseRestApi(IApiOptions apiOptions)
+    public BaseRestApi(ExchangeApiOptions apiOptions)
     {
         _apiOptions = apiOptions;
     }

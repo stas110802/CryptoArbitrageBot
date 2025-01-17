@@ -3,6 +3,7 @@ using CryptoArbitrageBot.ExchangeClients.Models;
 using CryptoArbitrageBot.ExchangeClients.Utilities;
 using CryptoArbitrageBot.ExchangesRestAPI.Api;
 using CryptoArbitrageBot.ExchangesRestAPI.Endpoints;
+using CryptoArbitrageBot.ExchangesRestAPI.Options;
 using CryptoArbitrageBot.ExchangesRestAPI.Utilities;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -14,9 +15,9 @@ public sealed class BinanceClient : IExchangeClient
 {
     private readonly BaseRestApi<BinanceRequest> _api;
     
-    public BinanceClient(BaseRestApi<BinanceRequest> api)
+    public BinanceClient(ExchangeApiOptions options)
     {
-        _api = api ?? throw new ArgumentNullException(nameof(api));
+        _api = new BaseRestApi<BinanceRequest>(options);
     }
     
     public CurrencyPair GetCurrencyInfo(string currency)
@@ -46,7 +47,7 @@ public sealed class BinanceClient : IExchangeClient
         if(response == null)
             throw new NullReferenceException("Binance.GetCurrencyPrice response is null");
         
-        var price = decimal.Parse(response.ToString(), CultureInfo.InvariantCulture);
+        var price = Parse(response.ToString(), CultureInfo.InvariantCulture);
         
         return price;
     }
@@ -89,14 +90,17 @@ public sealed class BinanceClient : IExchangeClient
 
     public bool CreateSellOrder(string currency, decimal amount, decimal price)
     {
-        var query = $"?timestamp={GetTimestamp}&symbol={currency}&quantity={amount}&price={price}&side=SELL&type=MARKET";
+        var strAmount = amount.ToString(CultureInfo.InvariantCulture);
+        var strPrice = price.ToString(CultureInfo.InvariantCulture);
+        var query = $"?timestamp={GetTimestamp()}&symbol={currency}&quantity={strAmount}&price={strPrice}&side=SELL&type=LIMIT&timeInForce=GTC";
         
         return CreateSellOrder(query);
     }
 
     public bool CreateSellOrder(string currency, decimal amount)
     {
-        var query = $"?timestamp={GetTimestamp}&symbol={currency}&quantity={amount}&side=SELL&type=MARKET";
+        var strAmount = amount.ToString(CultureInfo.InvariantCulture);
+        var query = $"?timestamp={GetTimestamp()}&symbol={currency}&quantity={strAmount}&side=SELL&type=MARKET";
         
         return CreateSellOrder(query);
     }
@@ -139,9 +143,10 @@ public sealed class BinanceClient : IExchangeClient
 
     public IEnumerable<Order> GetMyOrders()
     {
+        var query = $"?timestamp={GetTimestamp()}";
         var result = new List<Order>();
         var orders = _api
-            .CreateRequest(Method.Get, BinanceEndpoint.OrderList)
+            .CreateRequest(Method.Get, BinanceEndpoint.OrderList, query)
             .Authorize()
             .Execute()
             .FromJson<JToken>()["orders"];
@@ -171,12 +176,12 @@ public sealed class BinanceClient : IExchangeClient
 
     private bool CreateSellOrder(string query)
     {
-        var sellPrice = _api
+        var id = _api
             .CreateRequest(Method.Post, BinanceEndpoint.Order, query)
             .Authorize()
             .Execute()
-            .FromJson<JToken>()["price"];
-        
-        return TryParse(sellPrice.ToString(), CultureInfo.InvariantCulture, out _);
+            .FromJson<JToken>()["orderId"];
+
+        return TryParse(id.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out _);
     }
 }
