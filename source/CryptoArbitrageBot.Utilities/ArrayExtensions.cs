@@ -1,6 +1,6 @@
-﻿using CryptoArbitrageBot.Bot.Models;
+﻿using CryptoArbitrageBot.Utilities.Models;
 
-namespace CryptoArbitrageBot.Bot.Utilities;
+namespace CryptoArbitrageBot.Utilities;
 
 public static class ArrayExtensions
 {

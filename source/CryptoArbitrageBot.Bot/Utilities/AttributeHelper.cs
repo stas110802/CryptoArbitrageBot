@@ -4,21 +4,22 @@ namespace CryptoArbitrageBot.Bot.Utilities;
 
 public static class AttributeHelper
 {
-    public static T? GetValueOf<T>(Exchanges exchanges, ExchangeType description)
+    public static TKey? GetValueOf<TKey, TValue>(TValue exchanges, object description)
+        where TValue : class
     {
 
         var props = typeof(Exchanges).GetProperties().ToArray();
         foreach (var prop in props)
         {
-            var atts = prop.GetCustomAttributes(false);
-            foreach (var att in atts)
+            var attributes = prop.GetCustomAttributes(false);
+            foreach (var att in attributes)
             {
-                if (att is ExchangeAttribute)
+                if (att is HasValueAttribute attribute)
                 {
-                    var value = (att as ExchangeAttribute).Value;
+                    var value = attribute.Value;
                     if (description.Equals(value))
                     {
-                        return (T)prop.GetValue(exchanges, null);
+                        return (TKey)prop.GetValue(exchanges, null);
                     }
                 }
             }

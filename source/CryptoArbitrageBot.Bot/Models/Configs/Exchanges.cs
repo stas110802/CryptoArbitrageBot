@@ -5,14 +5,14 @@ namespace CryptoArbitrageBot.Bot.Models.Configs;
 
 public sealed class Exchanges
 {
-    [Exchange(ExchangeType.BinanceTestnet)]
+    [HasValue(ExchangeType.BinanceTestnet)]
     [JsonProperty("binance-testnet")]
     public ExchangeApiOptions? BinanceTestnetConfig { get; set; } = new()
     {
         BaseUri = "https://testnet.binance.vision"
     };
 
-    [Exchange(ExchangeType.Binance)]
+    [HasValue(ExchangeType.Binance)]
     [JsonProperty("binance")]
     public ExchangeApiOptions? BinanceConfig { get; set; } = new()
     {

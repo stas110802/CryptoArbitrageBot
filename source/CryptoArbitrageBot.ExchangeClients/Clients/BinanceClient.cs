@@ -5,6 +5,7 @@ using CryptoArbitrageBot.ExchangesRestAPI.Api;
 using CryptoArbitrageBot.ExchangesRestAPI.Endpoints;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
 using CryptoArbitrageBot.ExchangesRestAPI.Utilities;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using static System.Decimal;
@@ -130,11 +131,13 @@ public sealed class BinanceClient : IExchangeClient
     {
         var timestamp = TimestampHelper.GetUtcTimestamp();
         var query = $"?timestamp={timestamp}&coin={coin}&address={address}&amount={amount}";
+        
         var withdrawalResponse = _api
             .CreateRequest(Method.Post, BinanceEndpoint.Withdraw, query)
             .Authorize()
             .Execute()
             .FromJson<JToken>();
+        
         var id = withdrawalResponse["id"];
         var isSuccessful = TryParse(id.ToString(), CultureInfo.InvariantCulture, out _);
         
@@ -162,6 +165,27 @@ public sealed class BinanceClient : IExchangeClient
                 OrderId = Parse(order["orderId"].ToString(), CultureInfo.InvariantCulture),
                 ClientOrderId = Parse(order["clientOrderId"].ToString(), CultureInfo.InvariantCulture),
             });
+        }
+        
+        return result;
+    }
+
+    public IEnumerable<WithdrawalInfo> GetWithdrawalInfo()
+    {
+        var query = $"?timestamp={GetTimestamp()}";
+        var result = new List<WithdrawalInfo>();
+        
+        var infoArray = _api
+            .CreateRequest(Method.Get, BinanceEndpoint.AllCoinsInformation, query)
+            .Authorize()
+            .Execute()
+            .FromJson<JToken>();
+        
+        foreach (var coinItem in infoArray)
+        {
+            var networkList = coinItem["networkList"].ToString();
+            var items = JsonConvert.DeserializeObject<List<WithdrawalInfo>>(networkList) ?? [];
+            result.AddRange(items);
         }
         
         return result;

@@ -1,4 +1,4 @@
-﻿namespace CryptoArbitrageBot.Bot.Models;
+﻿namespace CryptoArbitrageBot.Utilities.Models;
 
 public class ArrayTraverse
 {

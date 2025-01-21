@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 
-namespace CryptoArbitrageBot.Bot.Utilities;
+namespace CryptoArbitrageBot.Utilities;
 
 public static class ObjectExtensions
-{ 
+{
     private static readonly MethodInfo CloneMethod 
             = typeof(Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -64,19 +64,3 @@ public static class ObjectExtensions
         return (T)Copy((Object)original);
     }
 }
-
-    public class ReferenceEqualityComparer : EqualityComparer<Object>
-    {
-        public override bool Equals(object x, object y)
-        {
-            return ReferenceEquals(x, y);
-        }
-        public override int GetHashCode(object obj)
-        {
-            if (obj == null) 
-                return 0;
-            return obj.GetHashCode();
-        }
-    }
-
-    

@@ -4,16 +4,16 @@ using static NUnit.Framework.Assert;
 
 namespace CryptoArbitrageBot.Bot.UnitTest;
 
-public class ConfigInitializerTest
+public class ConfigManagerTest
 {
-    private ConfigInitializer _initializer;
+    private ConfigManager _manager;
     private BotConfig _oldBotConfigCopy;
-    
+
     [SetUp]
     public void Setup()
     {
-        _initializer = new ConfigInitializer();
-        _oldBotConfigCopy = _initializer.GetCopyBotConfig();
+        _manager = new ConfigManager();
+        _oldBotConfigCopy = _manager.GetCopyBotConfig();
     }
 
     [Test]
@@ -26,44 +26,44 @@ public class ConfigInitializerTest
             AssertSetSmtpSettings()
         };
 
-        _initializer.SetFullConfig(_oldBotConfigCopy);
-        
+        _manager.SetFullConfig(_oldBotConfigCopy);
+
         tests.ForEach(IsTrue);
     }
-    
+
     private bool AssertSetExchangeApiKeys()
     {
-        _initializer.SetExchangeApiKeys(ExchangeType.BinanceTestnet,"testnet-key", "testnet-key-secret");
-        _initializer.SetExchangeApiKeys(ExchangeType.Binance,"binance-key", "binance-key-secret");
+        _manager.SetExchangeApiKeys(ExchangeType.BinanceTestnet, "testnet-key", "testnet-key-secret");
+        _manager.SetExchangeApiKeys(ExchangeType.Binance, "binance-key", "binance-key-secret");
 
-        var binanceTestnetCfg = _initializer.GetExchangeConfig(ExchangeType.BinanceTestnet);
-        var binanceCfg = _initializer.GetExchangeConfig(ExchangeType.Binance);
+        var binanceTestnetCfg = _manager.GetExchangeConfig(ExchangeType.BinanceTestnet);
+        var binanceCfg = _manager.GetExchangeConfig(ExchangeType.Binance);
 
         return !StringHelper.IsAnyNullOrEmpty(binanceTestnetCfg)
                && !StringHelper.IsAnyNullOrEmpty(binanceCfg);
     }
-    
+
     private bool AssertSetEmailAddress()
     {
-        var testAddresses = new []
+        var testAddresses = new[]
         {
             "user-name@mail.ru", "test@test.com",
             "icansaveyou@google.com", "buanov@bruh.pizdec"
         };
-        
+
         foreach (var totalAddress in testAddresses)
         {
-            _initializer.SetEmailAddress(totalAddress);
-            var configEmail = _initializer.GetEmailAddress();
-            if(!string.IsNullOrEmpty(configEmail) 
-               && configEmail == totalAddress)
+            _manager.SetEmailAddress(totalAddress);
+            var configEmail = _manager.GetEmailAddress();
+            if (!string.IsNullOrEmpty(configEmail)
+                && configEmail == totalAddress)
                 continue;
             return false;
         }
-        
+
         return true;
     }
-    
+
     private bool AssertSetSmtpSettings()
     {
         var smtp = new SmtpSettings
@@ -73,11 +73,9 @@ public class ConfigInitializerTest
             Password = "******",
             Port = 5834
         };
-        _initializer.SetSmtpSettings(smtp);
-        var configSmtp = _initializer.GetSmtpConfig();
-        
+        _manager.SetSmtpSettings(smtp);
+        var configSmtp = _manager.GetSmtpSettings();
+
         return configSmtp == smtp;
     }
-
-    
 }

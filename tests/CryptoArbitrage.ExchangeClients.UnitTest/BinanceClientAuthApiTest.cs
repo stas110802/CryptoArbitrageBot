@@ -8,12 +8,12 @@ namespace CryptoArbitrage.ExchangeClients.UnitTest;
 public class BinanceClientAuthApiTest
 {
     private BinanceClient _client;
-    private ConfigInitializer _cfg;
+    private ConfigManager _cfg;
     
     [SetUp]
     public void Setup()
     { 
-        _cfg = new ConfigInitializer();
+        _cfg = new ConfigManager();
         var configOptions = _cfg.GetExchangeConfig(ExchangeType.BinanceTestnet);
         var options = configOptions ?? new ExchangeApiOptions
         {

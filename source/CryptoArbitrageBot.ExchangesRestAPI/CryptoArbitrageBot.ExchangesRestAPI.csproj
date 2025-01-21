@@ -11,4 +11,8 @@
       <PackageReference Include="RestSharp" Version="112.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CryptoArbitrageBot.Utilities\CryptoArbitrageBot.Utilities.csproj" />
+    </ItemGroup>
+
 </Project>

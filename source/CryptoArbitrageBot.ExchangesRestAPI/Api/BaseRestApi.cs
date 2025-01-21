@@ -1,5 +1,6 @@
 ﻿using CryptoArbitrageBot.ExchangesRestAPI.Endpoints;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
+using CryptoArbitrageBot.Utilities;
 using RestSharp;
 
 
@@ -15,7 +16,7 @@ public sealed class BaseRestApi<T>
         _apiOptions = apiOptions;
     }
     
-    public T CreateRequest(Method method, BaseEndpoint endpoint,
+    public T CreateRequest(Method method, BaseType endpoint,
         string? query = null, string? payload = null)
     {
         var full = endpoint.Value + query;

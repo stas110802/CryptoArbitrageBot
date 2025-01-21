@@ -1,31 +1,32 @@
-﻿using CryptoArbitrageBot.Bot.Models.Configs;
+﻿using System.ComponentModel.DataAnnotations;
+using CryptoArbitrageBot.Bot.Models.Configs;
 using CryptoArbitrageBot.Bot.Utilities;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
+using CryptoArbitrageBot.Utilities;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
 
 namespace CryptoArbitrageBot.Bot;
 
-public class ConfigInitializer
+public class ConfigManager
 {
     private BotConfig _botConfig;
-    
-    public ConfigInitializer()
+
+    public ConfigManager()
     {
         LoadConfig();
     }
-    
-    public SmtpSettings? GetSmtpConfig() => _botConfig.Smtp;
+
+    public SmtpSettings? GetSmtpSettings() => _botConfig.Smtp;
 
     public BotConfig GetCopyBotConfig()
     {
         return _botConfig.Copy();
     }
-    
+
     public ExchangeApiOptions? GetExchangeConfig(ExchangeType exchange)
     {
-        var cfg = AttributeHelper.GetValueOf<ExchangeApiOptions>(_botConfig.Exchanges!, exchange);
-        
+        var cfg = AttributeHelper.GetValueOf<ExchangeApiOptions, Exchanges>(_botConfig.Exchanges!, exchange);
+
         return cfg;
     }
 
@@ -33,14 +34,15 @@ public class ConfigInitializer
     {
         return _botConfig.ClientEmail;
     }
-    
-    
+
+
     public void SetExchangeApiKeys(ExchangeType exchange, string key, string secret)
     {
-        var binanceTestnetConfig = AttributeHelper.GetValueOf<ExchangeApiOptions>(_botConfig.Exchanges!, exchange);
-        if (binanceTestnetConfig == null) 
+        var binanceTestnetConfig = AttributeHelper
+            .GetValueOf<ExchangeApiOptions, Exchanges>(_botConfig.Exchanges!, exchange);
+        if (binanceTestnetConfig == null)
             return;
-        
+
         binanceTestnetConfig.PublicKey = key;
         binanceTestnetConfig.SecretKey = secret;
         UpdateConfig();
@@ -51,14 +53,14 @@ public class ConfigInitializer
         _botConfig.Smtp = smtpSettings;
         UpdateConfig();
     }
-    
+
     public void SetEmailAddress(string emailAddress)
     {
         var emailValidator = new EmailAddressAttribute();
         var isValid = emailValidator.IsValid(emailAddress);
-        if(isValid == false)
+        if (isValid == false)
             throw new ArgumentException("Invalid email address");
-        
+
         _botConfig.ClientEmail = emailAddress;
         UpdateConfig();
     }
@@ -68,27 +70,27 @@ public class ConfigInitializer
         _botConfig = cfg;
         UpdateConfig();
     }
-    
+
     private static string ConfigFilePath => $@"{FolderPathList.ProjectFolder}\cfg.json";
 
     private void UpdateConfig()
     {
-        PathHelper.CreateFile(ConfigFilePath, _botConfig);
+        FileManager.CreateReadyFile(ConfigFilePath, _botConfig);
     }
 
     private void LoadConfig()
     {
         BotConfig? cfg = null;
-        
-        if(PathHelper.IsFileExists(ConfigFilePath))
+
+        if (FileManager.IsFileExists(ConfigFilePath))
             cfg = JsonConvert.DeserializeObject<BotConfig>(File.ReadAllText(ConfigFilePath));
-        
+
         if (cfg == null)
         {
             _botConfig = new BotConfig();
             return;
         }
-        
+
         _botConfig = cfg;
         UpdateConfig();
     }
