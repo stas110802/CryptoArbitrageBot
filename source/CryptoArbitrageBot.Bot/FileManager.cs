@@ -3,15 +3,8 @@ using Newtonsoft.Json;
 
 namespace CryptoArbitrageBot.Bot;
 
-public class FileManager
+public static class FileManager
 {
-    public static void InitializeBaseFolders()
-    {
-        var pl = new FolderPathList();
-        var projectFolders = StringHelper.GetStringValues(pl);
-        CheckForFolderExists(projectFolders);
-    }
-    
     /// <summary>
     /// Checks whether the directory exists, if not, creates it
     /// </summary>
@@ -50,5 +43,12 @@ public class FileManager
     public static bool IsFileExists(string filePath)
     {
         return File.Exists(filePath);
+    }
+
+    public static void CreateAllNeedAppFolders()
+    {
+        var pl = new FolderPathList();
+        var projectFolders = StringHelper.GetStringValues(pl);
+        CheckForFolderExists(projectFolders);
     }
 }

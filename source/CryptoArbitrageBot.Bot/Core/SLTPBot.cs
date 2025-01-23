@@ -10,13 +10,11 @@ namespace CryptoArbitrageBot.Bot.Core;
 public class SLTPBot
 {
     private BotLogger _botLogger;
-    private ConfigManager _configManager;
     private SLTPInfo _sltpInfo;
     
-    public SLTPBot(SLTPInfo sltpInfo, ConfigManager configManager, BotLogger botLogger)
+    public SLTPBot(SLTPInfo sltpInfo, BotLogger botLogger)
     {
         _sltpInfo = sltpInfo;
-        _configManager = configManager;
         _botLogger = botLogger;
     }
     
@@ -33,18 +31,20 @@ public class SLTPBot
 
             while (true)
             {
+                Console.Clear();
                 var balance = client.GetAccountBalance()
                     .FirstOrDefault(x => x.Currency == _sltpInfo.FirstCoin);
                 if (balance is null)
                    throw new Exception("Нулевой баланс!");
                     
                 var parseLog = GetTotalCurrencyInfo(balance);
+                Console.WriteLine(parseLog.ToString());
 
                 var currentPrice = parseLog.TotalPrice;
                 if (currentPrice <= _sltpInfo.UpperPrice &&
                     currentPrice >= _sltpInfo.BottomPrice)
                 {
-                    Thread.Sleep(10000);
+                    ConsoleHelper.LoadingBar(10);
                     continue;
                 }
                 

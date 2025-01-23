@@ -20,7 +20,7 @@ public sealed class BotLogger
     public void AddLog<T>(T log)
         where T : ILog
     {
-        AddLog(log, log.FilePath, log.Type, true);
+        AddLog(log, log.FilePath, log.Type, false);
     }
     
     private void AddLog<T>(T log, string filePath, SubjectType? subjectTheme = null, bool sendMailMessage = false)

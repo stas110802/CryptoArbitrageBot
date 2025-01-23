@@ -2,6 +2,7 @@
 using CryptoArbitrageBot.Bot.Interfaces;
 using CryptoArbitrageBot.Bot.Types;
 using CryptoArbitrageBot.Bot.Utilities;
+using Newtonsoft.Json;
 
 namespace CryptoArbitrageBot.Bot.Models.Logs;
 
@@ -29,9 +30,11 @@ public sealed class CurrencyLog : ILog
 
     [DataMember]
     public DateTime ParsingDate { get; set; }
-
+    
+    
     public string FilePath => $"{FolderPathList.LaunchesFolder}{DateTime.Now:dd.MM.yyyy}.json";
     
+   
     public SubjectType Type { get; init; }
 
     public override string ToString()

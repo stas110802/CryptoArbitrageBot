@@ -4,6 +4,7 @@ using CryptoArbitrageBot.Bot.Utilities;
 using CryptoArbitrageBot.ExchangesRestAPI.Options;
 using CryptoArbitrageBot.Utilities;
 using Newtonsoft.Json;
+using static System.String;
 
 namespace CryptoArbitrageBot.Bot;
 
@@ -23,10 +24,14 @@ public class ConfigManager
         return _botConfig.Copy();
     }
 
-    public ExchangeApiOptions? GetExchangeConfig(ExchangeType exchange)
+    public ExchangeApiOptions GetExchangeConfig(ExchangeType exchange)
     {
         var cfg = AttributeHelper.GetValueOf<ExchangeApiOptions, Exchanges>(_botConfig.Exchanges!, exchange);
-
+        if(cfg == null) 
+            throw new Exception($"Exchange '{exchange}' does not exist in configuration");
+        if(IsNullOrWhiteSpace(cfg.PublicKey) || IsNullOrWhiteSpace(cfg.SecretKey))
+            throw new Exception($"Public or secret key '{exchange}' is not configured");
+        
         return cfg;
     }
 
@@ -54,15 +59,14 @@ public class ConfigManager
         UpdateConfig();
     }
 
-    public void SetEmailAddress(string emailAddress)
+    public bool SetEmailAddress(string emailAddress)
     {
         var emailValidator = new EmailAddressAttribute();
         var isValid = emailValidator.IsValid(emailAddress);
-        if (isValid == false)
-            throw new ArgumentException("Invalid email address");
-
         _botConfig.ClientEmail = emailAddress;
         UpdateConfig();
+        
+        return isValid;
     }
 
     public void SetFullConfig(BotConfig cfg)

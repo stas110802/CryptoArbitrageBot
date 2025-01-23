@@ -10,12 +10,12 @@ namespace CryptoArbitrageBot.Bot.Core;
 public sealed class ArbitrageBot
 {
     private BotLogger _botLogger;
-    private ConfigManager _configManager;
+    //private ConfigManager _configManager;
     
-    public ArbitrageBot(ConfigManager manager, BotLogger botLogger)
+    public ArbitrageBot(BotLogger botLogger)
     {
         _botLogger = botLogger;
-        _configManager = manager;
+        //_configManager = manager;
     }
 
     public ILog StartArbitrage(ArbitrageInfo info)
