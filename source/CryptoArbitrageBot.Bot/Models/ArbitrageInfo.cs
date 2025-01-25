@@ -16,6 +16,8 @@ public class ArbitrageInfo
     public CandleType Type { get; set; }
     public IExchangeClient FirstClient { get; set; }
     public IExchangeClient SecondClient { get; set; }
+    public string FirstClientAddress { get; set; }
+    public string SecondClientAddress { get; set; }
 
     public string FirstExchangeName => nameof(FirstClient);
     public string SecondExchangeName => nameof(SecondClient);

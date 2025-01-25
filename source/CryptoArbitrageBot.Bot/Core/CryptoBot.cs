@@ -34,4 +34,9 @@ public sealed class CryptoBot
     {
         _sltpBot.StartSLTP();
     }
+    
+    public void RunArbitrageBot(ArbitrageInfo info)
+    {
+        _arbitrageBot.StartArbitrage(info);
+    }
 }

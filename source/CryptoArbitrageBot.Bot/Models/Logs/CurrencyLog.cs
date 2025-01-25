@@ -8,7 +8,9 @@ namespace CryptoArbitrageBot.Bot.Models.Logs;
 
 public sealed class CurrencyLog : ILog
 {
-    public CurrencyLog() { }
+    public CurrencyLog()
+    {
+    }
 
     public CurrencyLog(SLTPInfo options, decimal totalPrice, decimal availableBalance)
     {
@@ -18,23 +20,17 @@ public sealed class CurrencyLog : ILog
         AvailableBalance = availableBalance;
         Type = SubjectType.SellActivate;
     }
-    
-    [DataMember]
+
     public SLTPInfo Info { get; set; }
-    
-    [DataMember]
+
     public decimal AvailableBalance { get; set; }
-    
-    [DataMember]
+
     public decimal TotalPrice { get; set; }
 
-    [DataMember]
     public DateTime ParsingDate { get; set; }
-    
-    
+
     public string FilePath => $"{FolderPathList.LaunchesFolder}{DateTime.Now:dd.MM.yyyy}.json";
-    
-   
+
     public SubjectType Type { get; init; }
 
     public override string ToString()

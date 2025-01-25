@@ -9,8 +9,8 @@ namespace CryptoArbitrageBot.Bot.Core;
 
 public class SLTPBot
 {
-    private BotLogger _botLogger;
-    private SLTPInfo _sltpInfo;
+    private readonly BotLogger _botLogger;
+    private readonly SLTPInfo _sltpInfo;
     
     public SLTPBot(SLTPInfo sltpInfo, BotLogger botLogger)
     {
@@ -74,6 +74,7 @@ public class SLTPBot
                 {
                     log = _botLogger.WriteErrorLog($"Неудачная попытка разместить ордер на продажу {_sltpInfo.FirstCoin}-{_sltpInfo.SecondCoin}");
                 }
+                break;
             }
         }
         catch (Exception error)

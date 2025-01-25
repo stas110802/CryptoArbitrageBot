@@ -10,7 +10,7 @@ public class ConfigSettingsCommands : VoidCommandsObject
 {
     private readonly ConfigManager _configManager;
     private readonly Exchanges _exchanges;
-    
+
     public ConfigSettingsCommands()
     {
         _configManager = new ConfigManager();
@@ -153,10 +153,10 @@ public class ConfigSettingsCommands : VoidCommandsObject
         Console.Write("Укажите секретный api-ключ:");
         var secret = ConsoleHelper.ReadSecretString();
         Console.WriteLine();
-        
+
         if (string.IsNullOrWhiteSpace(key)) key = string.Empty;
         if (string.IsNullOrWhiteSpace(secret)) secret = string.Empty;
-        
+
         return (key, secret);
     }
 }

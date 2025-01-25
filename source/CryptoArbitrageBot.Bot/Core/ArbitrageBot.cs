@@ -10,12 +10,10 @@ namespace CryptoArbitrageBot.Bot.Core;
 public sealed class ArbitrageBot
 {
     private BotLogger _botLogger;
-    //private ConfigManager _configManager;
     
     public ArbitrageBot(BotLogger botLogger)
     {
         _botLogger = botLogger;
-        //_configManager = manager;
     }
 
     public ILog StartArbitrage(ArbitrageInfo info)
@@ -32,23 +30,25 @@ public sealed class ArbitrageBot
                 var candle2 = info.SecondClient.GetCurrencyPrice(currencyPair);
 
                 decimal difference;
-                var withdrawalAddress = string.Empty;
+                string withdrawalAddress;
                 IExchangeClient lowerPriceClient;
                 IExchangeClient highestPriceClient;
 
                 if (candle1 > candle2)
                 {
                     lowerPriceClient = info.SecondClient;
+                    withdrawalAddress = info.SecondClientAddress;
                     highestPriceClient = info.FirstClient;
                     difference = (candle1 / candle2 - 1) * 100;
                 }
                 else
                 {
                     lowerPriceClient = info.FirstClient;
+                    withdrawalAddress = info.FirstClientAddress;
                     highestPriceClient = info.SecondClient;
                     difference = (candle2 / candle1 - 1) * 100;
                 }
-
+                
                 if (difference < 3)
                     continue;
 
@@ -61,7 +61,7 @@ public sealed class ArbitrageBot
                 }
 
                 //withdrawalCommission = lowerPriceClient.GetWithdrawalCommission(currencyPair);
-                //withdrawalAddress = lowerPriceClient.GetWithdrawalAddress(currencyPair);
+                
                 var withdrawal = lowerPriceClient.WithdrawalCurrency(
                     info.FirstCoin, info.Amount, withdrawalAddress);
                 if (withdrawal is false)
@@ -72,7 +72,7 @@ public sealed class ArbitrageBot
 
                 Thread.Sleep(3000);
 
-                // todo получить кол-во = amount - коммисия
+                // получить кол-во = amount - коммисия
                 var newAmount = highestPriceClient.GetCurrencyBalance(
                     info.FirstCoin).AvailableBalance;
 
@@ -82,9 +82,9 @@ public sealed class ArbitrageBot
                     log = _botLogger.WriteErrorLog("[Арбитражный бот] вторая сделка на продажу не удалась");
                     break;
                 }
-
-                var arbitrageLog = new ArbitrageLog(info);
-                log = arbitrageLog;
+                
+                log = new ArbitrageLog(info, candle1, candle2);
+                break;
             }
         }
         catch (Exception e)
