@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using CryptoArbitrageBot.Utilities.Types;
 using static System.String;
 
 namespace CryptoArbitrageBot.ExchangesRestAPI.Utilities;
@@ -20,6 +21,18 @@ public static class HashCalculator
 
         return result;
     }
+
+    public static string CalculateHMACSHA384(string text, string salt, SignOutputType? outputType = null)
+    {
+        var sBytes = Encoding.UTF8.GetBytes(salt);
+        var data = Encoding.UTF8.GetBytes(text);
+
+        using var encryptor = new HMACSHA384(sBytes);
+        
+        var resultBytes = encryptor.ComputeHash(data);
+        
+        return outputType == SignOutputType.Base64 ? BytesToBase64String(resultBytes) : BytesToHexString(resultBytes);
+    }
     
     public static string SignBinance(string payload, string salt)
     {
@@ -29,5 +42,15 @@ public static class HashCalculator
         var hash = hmacsha256.ComputeHash(payloadBytes);
 
         return BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
+    }
+    
+    private static string BytesToBase64String(byte[] buff)
+    {
+        return Convert.ToBase64String(buff);
+    }
+    
+    private static string BytesToHexString(byte[] buff)
+    {
+        return Convert.ToHexString(buff);
     }
 }

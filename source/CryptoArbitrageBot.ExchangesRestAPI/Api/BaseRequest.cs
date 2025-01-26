@@ -8,7 +8,7 @@ public abstract class BaseRequest
     public RestClient? Client;
     public RequestOptions? RequestOptions { get; set; }
     public ExchangeApiOptions? ApiOptions { get; set; }
-    public abstract BaseRequest Authorize();
+    public abstract BaseRequest Authorize(Dictionary<string, object>? bodyParameters = null);
     
     public string Execute()
     {

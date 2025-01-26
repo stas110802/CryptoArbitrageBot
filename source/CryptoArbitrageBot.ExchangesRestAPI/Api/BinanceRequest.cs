@@ -5,7 +5,7 @@ namespace CryptoArbitrageBot.ExchangesRestAPI.Api;
 
 public sealed class BinanceRequest : BaseRequest
 {
-    public override BaseRequest Authorize()
+    public override BaseRequest Authorize(Dictionary<string, object>? bodyParameters = null)
     {
         if (RequestOptions == null || ApiOptions == null)
             throw new NullReferenceException("");

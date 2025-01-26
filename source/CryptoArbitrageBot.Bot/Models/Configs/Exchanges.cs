@@ -18,4 +18,11 @@ public sealed class Exchanges
     {
         BaseUri = "https://api.binance.com"
     };
+    
+    [HasValue(ExchangeType.Bitfinex)]
+    [JsonProperty("bitfinex")]
+    public ExchangeApiOptions? BitfinexConfig { get; set; } = new()
+    {
+        BaseUri = "https://api.bitfinex.com"
+    };
 }

@@ -3,5 +3,6 @@
 public enum ExchangeType
 {
     Binance,
-    BinanceTestnet
+    BinanceTestnet,
+    Bitfinex
 }
