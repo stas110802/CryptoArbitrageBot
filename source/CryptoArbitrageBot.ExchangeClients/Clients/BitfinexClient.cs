@@ -54,7 +54,7 @@ public sealed class BitfinexClient : IExchangeClient
 
     public decimal GetCurrencyPrice(string currency)
     {
-        var query = @"\t" + currency.Replace("USDT", "USD");
+        var query = @"\t" + currency.ToUpper().Replace("USDT", "USD");
         var response = _api
             .CreateRequest(Method.Get, BitfinexEndpoint.Ticker, query)
             .Execute()

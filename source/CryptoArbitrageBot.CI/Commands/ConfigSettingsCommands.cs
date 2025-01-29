@@ -32,6 +32,10 @@ public class ConfigSettingsCommands : VoidCommandsObject
 
         ConsoleHelper.Write("[4]", ConsoleColor.Red);
         ConsoleHelper.Write(" - указать api-ключи для ", ConsoleColor.Gray);
+        ConsoleHelper.WriteLine("Bitfinex", ConsoleColor.Green);
+        
+        ConsoleHelper.Write("[5]", ConsoleColor.Red);
+        ConsoleHelper.Write(" - указать api-ключи для ", ConsoleColor.Gray);
         ConsoleHelper.WriteLine("Binance-TestNet", ConsoleColor.Yellow);
 
         ConsoleHelper.Write("[Q]", ConsoleColor.Red);
@@ -117,19 +121,28 @@ public class ConfigSettingsCommands : VoidCommandsObject
     [ConsoleCommand(ConsoleKey.D3)]
     public void SetBinanceApiKey()
     {
-        var apiKeys = GetApiKeys();
-        _configManager.SetExchangeApiKeys(ExchangeType.Binance, apiKeys.Item1, apiKeys.Item2);
-        PrintDataSuccessfulUpdate();
+        SetApiKeys(ExchangeType.Binance);
+    }
+    
+    [ConsoleCommand(ConsoleKey.D4)]
+    public void SetBitfinexApiKey()
+    {
+        SetApiKeys(ExchangeType.Bitfinex);
     }
 
-    [ConsoleCommand(ConsoleKey.D4)]
+    [ConsoleCommand(ConsoleKey.D5)]
     public void SetBinanceTestnetApiKey()
     {
-        var apiKeys = GetApiKeys();
-        _configManager.SetExchangeApiKeys(ExchangeType.BinanceTestnet, apiKeys.Item1, apiKeys.Item2);
-        PrintDataSuccessfulUpdate();
+        SetApiKeys(ExchangeType.BinanceTestnet);
     }
 
+    private void SetApiKeys(ExchangeType type)
+    {
+        var apiKeys = GetApiKeys();
+        _configManager.SetExchangeApiKeys(type, apiKeys.Item1, apiKeys.Item2);
+        PrintDataSuccessfulUpdate();
+    }
+    
     private void PrintErrorMessage(string errorMessage)
     {
         Console.Clear();

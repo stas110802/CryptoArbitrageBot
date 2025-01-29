@@ -4,6 +4,7 @@ using CryptoArbitrageBot.Bot.Models;
 using CryptoArbitrageBot.Bot.Models.Logs;
 using CryptoArbitrageBot.Bot.Types;
 using CryptoArbitrageBot.ExchangeClients;
+using CryptoArbitrageBot.Utilities;
 
 namespace CryptoArbitrageBot.Bot.Core;
 
@@ -25,7 +26,7 @@ public sealed class ArbitrageBot
         {
             while (true)
             {
-                Thread.Sleep(2000);
+                
                 var candle1 = info.FirstClient.GetCurrencyPrice(currencyPair);
                 var candle2 = info.SecondClient.GetCurrencyPrice(currencyPair);
 
@@ -33,7 +34,13 @@ public sealed class ArbitrageBot
                 string withdrawalAddress;
                 IExchangeClient lowerPriceClient;
                 IExchangeClient highestPriceClient;
-
+                
+                Console.Clear();
+                var startLog = new ArbitrageLog(info, candle1, candle2);
+                Console.WriteLine(startLog.ToString());
+                ConsoleHelper.LoadingBar(10);
+                Console.Clear();
+                
                 if (candle1 > candle2)
                 {
                     lowerPriceClient = info.SecondClient;

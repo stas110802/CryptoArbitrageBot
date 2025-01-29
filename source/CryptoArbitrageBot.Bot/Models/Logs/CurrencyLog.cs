@@ -1,8 +1,6 @@
-﻿using System.Runtime.Serialization;
-using CryptoArbitrageBot.Bot.Interfaces;
+﻿using CryptoArbitrageBot.Bot.Interfaces;
 using CryptoArbitrageBot.Bot.Types;
 using CryptoArbitrageBot.Bot.Utilities;
-using Newtonsoft.Json;
 
 namespace CryptoArbitrageBot.Bot.Models.Logs;
 

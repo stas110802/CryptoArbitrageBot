@@ -19,6 +19,7 @@ public class ArbitrageInfo
     public string FirstClientAddress { get; set; }
     public string SecondClientAddress { get; set; }
 
-    public string FirstExchangeName => nameof(FirstClient);
-    public string SecondExchangeName => nameof(SecondClient);
+    public string FirstExchangeName => FirstClient.GetType().Name;
+    public string SecondExchangeName => SecondClient.GetType().Name;
+    
 }

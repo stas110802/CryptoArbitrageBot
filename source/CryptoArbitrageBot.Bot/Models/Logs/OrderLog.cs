@@ -35,8 +35,8 @@ public class OrderLog : ILog
 
     public override string ToString()
     {
-        return $"Продаем: {Info.FirstCoin} за {Info.SecondCoin}\n" +
-               $"Дата: {OrderDate}\n" +
+        return $"Продали: {Info.FirstCoin} за {Info.SecondCoin}\n" +
+               $"Дата продажи: {OrderDate}\n" +
                $"Рекомендуемая цена: {Info.UpperPrice} {Info.SecondCoin}\n" +
                $"Критическая цена: {Info.BottomPrice} {Info.SecondCoin}\n" +
                $"Цена продажи: {SellPrice} {Info.SecondCoin}\n" +

@@ -28,6 +28,7 @@ public class ErrorLog : ILog
     public override string ToString()
     {
         return $"Дата возникновения ошибки: {ErrorDate}\n" +
-               $"{Type}: {Message}";
+               $"[{Type?.Value}]: {Message}\n" +
+               $"Отчеты об ошибках находятся в {FilePath}";
     }
 }

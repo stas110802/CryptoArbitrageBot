@@ -20,14 +20,16 @@ public class ClientSelectCommands : MultiCommandsObject<IExchangeClient>
     {
         Console.Clear();
         Console.WriteLine("Какая биржа необходима? : ");
-        
-        ConsoleHelper.Write("[1]", ConsoleColor.Red);
-        ConsoleHelper.WriteLine(" - Binance", ConsoleColor.Gray);
-        
-        ConsoleHelper.Write("[2]", ConsoleColor.Red);
-        ConsoleHelper.WriteLine(" - Binance (TESTNET)", ConsoleColor.Yellow);
+        PrintAllExchanges();
     }
 
+    public void PrintCustomTextCommands(string text)
+    {
+        Console.Clear();
+        Console.WriteLine(text);
+        PrintAllExchanges();
+    }
+    
     [ConsoleCommand(ConsoleKey.D1)]
     public BinanceClient GetBinanceClient()
     {
@@ -36,9 +38,28 @@ public class ClientSelectCommands : MultiCommandsObject<IExchangeClient>
     }
     
     [ConsoleCommand(ConsoleKey.D2)]
+    public BitfinexClient GetBitfinexClient()
+    {
+        var options = _configManager.GetExchangeConfig(ExchangeType.Bitfinex);
+        return new BitfinexClient(options);
+    }
+    
+    [ConsoleCommand(ConsoleKey.D3)]
     public BinanceClient GetBinanceTestnetClient()
     {
         var options = _configManager.GetExchangeConfig(ExchangeType.BinanceTestnet);
         return new BinanceClient(options);
+    }
+    
+    private static void PrintAllExchanges()
+    {
+        ConsoleHelper.Write("[1]", ConsoleColor.Red);
+        ConsoleHelper.WriteLine(" - Binance", ConsoleColor.Gray);
+        
+        ConsoleHelper.Write("[2]", ConsoleColor.Red);
+        ConsoleHelper.WriteLine(" - Bitfinex", ConsoleColor.Gray);
+        
+        ConsoleHelper.Write("[3]", ConsoleColor.Red);
+        ConsoleHelper.WriteLine(" - Binance (TESTNET)", ConsoleColor.Yellow);
     }
 }
