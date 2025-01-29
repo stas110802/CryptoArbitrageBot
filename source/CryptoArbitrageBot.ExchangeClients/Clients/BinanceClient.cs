@@ -162,8 +162,7 @@ public sealed class BinanceClient : IExchangeClient
             result.Add(new Order
             {
                 Currency = order["symbol"].ToString(),
-                OrderId = Parse(order["orderId"].ToString(), CultureInfo.InvariantCulture),
-                ClientOrderId = Parse(order["clientOrderId"].ToString(), CultureInfo.InvariantCulture),
+                OrderId = Parse(order["orderId"].ToString(), CultureInfo.InvariantCulture)
             });
         }
         
