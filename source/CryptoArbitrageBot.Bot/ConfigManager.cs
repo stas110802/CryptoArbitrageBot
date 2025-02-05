@@ -18,7 +18,7 @@ public class ConfigManager
     }
 
     public SmtpSettings? GetSmtpSettings() => _botConfig.Smtp;
-
+    
     public BotConfig GetCopyBotConfig()
     {
         return _botConfig.Copy();
@@ -39,7 +39,6 @@ public class ConfigManager
     {
         return _botConfig.ClientEmail;
     }
-
 
     public void SetExchangeApiKeys(ExchangeType exchange, string key, string secret)
     {

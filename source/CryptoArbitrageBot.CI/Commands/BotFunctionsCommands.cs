@@ -62,7 +62,7 @@ public class BotFunctionsCommands : VoidCommandsObject
         Console.Clear();
         ConsoleHelper.Write($"адрес монеты {firstCoin} на первой бирже ({firstClient.GetType().Name}): ",
             ConsoleColor.Gray);
-        var firstClientAddress = Console.ReadLine();
+        var firstClientAddress = ConsoleHelper.ReadSecretString();
 
         _clientSelectCommands.PrintCustomTextCommands("Вторая биржа: ");
         var secondClient = _clientSelectCommands.ReadFuncCommandKey();
@@ -70,7 +70,7 @@ public class BotFunctionsCommands : VoidCommandsObject
         Console.Clear();
         ConsoleHelper.Write($"адрес монеты {firstCoin} на второй бирже ({secondClient.GetType().Name}): ",
             ConsoleColor.Gray);
-        var secondClientAddress = Console.ReadLine();
+        var secondClientAddress = ConsoleHelper.ReadSecretString();
 
         if (firstClient?.GetType().Name == secondClient?.GetType().Name)
         {

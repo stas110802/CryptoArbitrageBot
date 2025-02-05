@@ -15,11 +15,7 @@ public class BinanceClientAuthApiTest
     { 
         _cfg = new ConfigManager();
         var configOptions = _cfg.GetExchangeConfig(ExchangeType.BinanceTestnet);
-        var options = configOptions ?? new ExchangeApiOptions
-        {
-            BaseUri = "https://testnet.binance.vision"
-        };
-        _client = new BinanceClient(options);
+        _client = new BinanceClient(configOptions);
     }
     
     [Test]
